@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'artist-add' %}" class="custom-btn btn btn-primary">Enter New Artist</a><br>
+<section class="cards-container">
+  <!-- Display artist Cards -->
+  {% for artist in object_list %}
+    <div class="card-box">
+        <div class="card">
+            <div class="card-type" id="artist">
+                <div class="card-image" id="artist-img">
+                    <!-- Check if the artist has a profile image -->
+                    {% if artist.ProfileImage %}
+                        <img src="{{ artist.ProfileImage.url }}" alt="{{ artist.Artist_name}}Image">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                </div>
+                <div class="card-name">
+                    <h2 class="sbs"> {{ artist.Artist_name}}</h2>
+                    <hr />
+                </div>
+                <table class="card-stats">
+            <tbody>
+              <tr><th>Song:</th>
+                <td>{{ artist.Song }}</td>
+
+            <th>Email:</th>
+            <td>{{ artist.Email }}</td>
+              </tr>
+              <tr>
+              </tr>
+              <!-- Add more artist fields as needed -->
+              <tr>
+                <th>Action:</th>
+                <td>
+                 <!-- Example link in a template -->
+                 <a href="{% url 'artist-update' pk=artist.pk %}">Edit</a>
+
+                    <!-- Example link in a template -->
+                    <a href="{% url 'artist-delete' pk=artist.pk %}">Delete</a>
+
+                    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr />
+      </div>
+    </div>
+  {% endfor %}
+  <div>
+    {% include 'includes/pagination.html' %}
+  </div>
+</section>
+
+{% endblock %}
